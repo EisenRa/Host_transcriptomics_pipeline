@@ -2,5 +2,5 @@
 ### RE 10/2022
 
 # n.b., host_genome is the directory where the genome is stored, not the file itself.
-host_genome: /path/to/genome/
-annotation: /path/to/annotation.gtf
+host_genome: /projects/mjolnir1/data/genomes/chicken_GRCg6a
+annotation: /projects/mjolnir1/data/genomes/chicken_GRCg6a/GCF_000002315.6_GRCg6a_genomic.gtf.gz

@@ -17,7 +17,7 @@ print(SAMPLE)
 
 rule all:
     input:
-        expand("3_Outputs/1_Mapping/{sample}.counts", sample=SAMPLE)
+        expand("3_Outputs/1_Mapping/{sample}_host.bam", sample=SAMPLE)
 
 rule qualityfiltering:
     input:
@@ -105,24 +105,3 @@ rule STAR_host_mapping:
         rm -r {wildcards.sample}_STARtmp
         rm {wildcards.sample}*out*
         """
-        
-rule counting:
-    input:
-        "3_Outputs/1_Mapping/{sample}_host.bam"
-    threads: 1
-    conda:
-        "Transcriptomics_conda.yml"
-    output:
-        "3_Outputs/1_Mapping/{sample}.counts"
-    params:
-        annotation = expand("{annotation}", annotation=config['annotation'])
-    shell:
-        """
-        htseq-count \
-            -s no \
-            -r pos \
-            -t exon \
-            -i gene_name \
-            -f bam {input} {params.annotation} > {output}
-        """
-

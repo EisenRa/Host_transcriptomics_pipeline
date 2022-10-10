@@ -5,6 +5,5 @@
     - defaults
  dependencies:
     - fastp=0.23.2
-    - htseq=2.0.2
     - star=2.7.10a
     - pigz=2.3.4
