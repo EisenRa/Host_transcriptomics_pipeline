@@ -3,7 +3,7 @@
 #### Authors: Antton Alberdi/Raphael Eisenhofer
 ############################################################################
 
-configfile: "Transcriptomics_config.yml"
+configfile: "0_Code/Transcriptomics_config.yml"
 
 ### Setup sample inputs
 import os
@@ -24,6 +24,8 @@ rule qualityfiltering:
         read1="2_Reads/1_Untrimmed/{sample}_1.fq.gz",
         read2="2_Reads/1_Untrimmed/{sample}_2.fq.gz"
     threads: 8
+    resources:
+        mem_gb=24
     conda: 
         "Transcriptomics.yml"
     output:
@@ -69,6 +71,8 @@ rule STAR_host_mapping:
         "Transcriptomics_conda.yml"
     threads:
         24
+    resources:
+        mem_gb=150
     message:
         "Mapping {wildcards.sample} to the host genome using STAR"
     shell:
