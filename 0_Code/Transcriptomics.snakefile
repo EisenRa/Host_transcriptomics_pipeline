@@ -27,7 +27,7 @@ rule qualityfiltering:
     resources:
         mem_gb=24
     conda: 
-        "Transcriptomics.yml"
+        "Transcriptomics_conda_env.yml"
     output:
         read1="2_Reads/2-Qualfilt/{sample}_1.fastq.gz",
         read2="2_Reads/2-Qualfilt/{sample}_2.fastq.gz",
@@ -68,7 +68,7 @@ rule STAR_host_mapping:
         sj = "3_Outputs/1_Mapping/{sample}_SJ.tsv",
         host_genome = expand("{host_genome}", host_genome=config['host_genome'])
     conda:
-        "Transcriptomics_conda.yml"
+        "Transcriptomics_conda_env.yml"
     threads:
         24
     resources:
