@@ -1,0 +1,6 @@
+### Config file for host transcriptomics pipeline
+### RE 10/2022
+
+# n.b., host_genome is the directory where the genome is stored, not the file itself.
+host_genome: /path/to/genome/
+annotation: /path/to/annotation.gtf
