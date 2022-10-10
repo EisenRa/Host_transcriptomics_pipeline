@@ -21,16 +21,16 @@ rule all:
 
 rule qualityfiltering:
     input:
-        read1="2_Reads/1_Untrimmed/{sample}_1.fq.gz",
-        read2="2_Reads/1_Untrimmed/{sample}_2.fq.gz"
+        read1="2_Reads/1_Untrimmed/{sample}_1.fastq.gz",
+        read2="2_Reads/1_Untrimmed/{sample}_2.fastq.gz"
     threads: 8
     resources:
         mem_gb=24
     conda: 
         "Transcriptomics.yml"
     output:
-        read1="2_Reads/2-Qualfilt/{sample}_1.fq.gz",
-        read2="2_Reads/2-Qualfilt/{sample}_2.fq.gz",
+        read1="2_Reads/2-Qualfilt/{sample}_1.fastq.gz",
+        read2="2_Reads/2-Qualfilt/{sample}_2.fastq.gz",
         fastp_html="2_Reads/2-Qualfilt/{sample}.html",
         fastp_json="2_Reads/2-Qualfilt/{sample}.json"
     message:
@@ -55,11 +55,11 @@ rule qualityfiltering:
 ### Map to host reference genome using STAR
 rule STAR_host_mapping:
     input:
-        read1="2_Reads/2-Qualfilt/{sample}_1.fq.gz",
-        read2="2_Reads/2-Qualfilt/{sample}_2.fq.gz",
+        read1="2_Reads/2-Qualfilt/{sample}_1.fastq.gz",
+        read2="2_Reads/2-Qualfilt/{sample}_2.fastq.gz",
     output:
-        non_host_r1 = "3_Outputs/1_Mapping/{sample}_non_host_1.fq.gz",
-        non_host_r2 = "3_Outputs/1_Mapping/{sample}_non_host_2.fq.gz",
+        non_host_r1 = "3_Outputs/1_Mapping/{sample}_non_host_1.fastq.gz",
+        non_host_r2 = "3_Outputs/1_Mapping/{sample}_non_host_2.fastq.gz",
         host_bam = "3_Outputs/1_Mapping/{sample}_host.bam"
     params:
         r1rn = "3_Outputs/1_Host_Mapping/{sample}_non_host_1.fastq",
