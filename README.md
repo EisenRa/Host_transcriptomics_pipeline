@@ -8,7 +8,7 @@ This pipeline uses snakemake, and manages dependencies using conda (or mamba) fo
 ## Getting started:
 Firstly, you'll want to clone this directory to the system where you want to run the analyses:
 ```
-git clone https://github.com/anttonalberdi/EHI_bioinformatics.git
+git clone https://github.com/EisenRa/Host_transcriptomics_pipeline.git
 ```
 
 ### What this pipeline does:
