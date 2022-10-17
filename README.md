@@ -1,6 +1,6 @@
 # Host transcriptomics pipeline
 Pipeline for analysing host transcriptomics data
-_Last updated: Raphael Eisenhofer - 10/10/2022_
+_Last updated: Raphael Eisenhofer - 17/10/2022_
 
 ### General information:
 This pipeline uses snakemake, and manages dependencies using conda (or mamba) for reproducibility and deployability. The 0_Code directory contains the snakefiles, scripts, and conda environment yamls. 
@@ -36,9 +36,9 @@ That's all the setup required to get the pipeline running. Now you just need to 
 snakemake \
 -s 0_Code/Transcriptomics.snakefile \
 -j 10 \
---cluster "sbatch --mem {resources.mem_gb}G --cores {threads}" \
+--cluster "sbatch --mem {resources.mem_gb}G --time {resources.time} --cores {threads}" \
 --use-conda \
---conda-frontend conda \
+--conda-frontend mamba \
 --conda-prefix /projects/mjolnir1/people/ncl550/0_software \
 --latency-wait 600
 ```
