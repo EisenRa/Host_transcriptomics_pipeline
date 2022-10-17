@@ -25,7 +25,8 @@ rule qualityfiltering:
         read2="2_Reads/1_Untrimmed/{sample}_2.fastq.gz"
     threads: 8
     resources:
-        mem_gb=24
+        mem_gb=24,
+        time='01:00:00'
     conda: 
         "Transcriptomics_conda_env.yml"
     output:
@@ -75,7 +76,8 @@ rule STAR_host_mapping:
     threads:
         24
     resources:
-        mem_gb=150
+        mem_gb=150,
+        time='08:00:00'
     message:
         "Mapping {wildcards.sample} to the host genome using STAR"
     shell:
