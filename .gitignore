@@ -1,2 +1,3 @@
 2_Reads/1_Untrimmed/*
 3_Outputs/
+.snakemake/
