@@ -98,7 +98,7 @@ rule STAR_host_mapping:
             --quantMode GeneCounts 
 
         # Rename files
-        mv {wildcards.sample}Aligned.out.bam {output.host_bam}
+        mv {wildcards.sample}Aligned.sortedByCoord.out.bam {output.host_bam}
         mv {wildcards.sample}ReadsPerGene.out.tab {params.gene_counts}
         mv {wildcards.sample}SJ.out.tab {params.sj}
         mv {wildcards.sample}Unmapped.out.mate1 {params.r1rn}
