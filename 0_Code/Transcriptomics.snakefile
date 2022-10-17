@@ -82,6 +82,9 @@ rule STAR_host_mapping:
         "Mapping {wildcards.sample} to the host genome using STAR"
     shell:
         """
+        # Set max file open limit (STAR opens a lot of temp files)
+        ulimit -n 90000
+
         # Map reads to host genome using STAR
         STAR \
             --runMode alignReads \
