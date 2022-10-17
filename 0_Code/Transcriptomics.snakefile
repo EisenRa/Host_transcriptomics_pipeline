@@ -51,6 +51,9 @@ rule qualityfiltering:
             --adapter_sequence AGATCGGAAGAGCACACGTCTGAACTCCAGTCA \
             --adapter_sequence_r2  AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
         """
+### Create STAR index???
+
+
 
 ### Map to host reference genome using STAR
 rule STAR_host_mapping:
