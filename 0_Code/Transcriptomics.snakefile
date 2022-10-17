@@ -66,8 +66,8 @@ rule STAR_host_mapping:
         non_host_r2 = "3_Outputs/1_Mapping/{sample}_non_host_2.fastq.gz",
         host_bam = "3_Outputs/1_Mapping/{sample}_host.bam"
     params:
-        r1rn = "3_Outputs/1_Host_Mapping/{sample}_non_host_1.fastq",
-        r2rn = "3_Outputs/1_Host_Mapping/{sample}_non_host_2.fastq",
+        r1rn = "3_Outputs/1_Mapping/{sample}_non_host_1.fastq",
+        r2rn = "3_Outputs/1_Mapping/{sample}_non_host_2.fastq",
         gene_counts = "3_Outputs/1_Mapping/{sample}_read_counts.tsv",
         sj = "3_Outputs/1_Mapping/{sample}_SJ.tsv",
         host_genome = expand("{host_genome}", host_genome=config['host_genome'])
