@@ -9,8 +9,8 @@ configfile: "0_Code/Transcriptomics_config.yml"
 import os
 from glob import glob
 
-SAMPLE = [os.path.basename(fn).replace("_1.fastq.gz", "")
-            for fn in glob(f"2_Reads/1_Untrimmed/*_1.fastq.gz")]
+SAMPLE = [os.path.basename(fn).replace("_1.fq.gz", "")
+            for fn in glob(f"2_Reads/1_Untrimmed/*_1.fq.gz")]
 
 print("Detected the following samples:")
 print(SAMPLE)
@@ -21,8 +21,8 @@ rule all:
 
 rule qualityfiltering:
     input:
-        read1="2_Reads/1_Untrimmed/{sample}_1.fastq.gz",
-        read2="2_Reads/1_Untrimmed/{sample}_2.fastq.gz"
+        read1="2_Reads/1_Untrimmed/{sample}_1.fq.gz",
+        read2="2_Reads/1_Untrimmed/{sample}_2.fq.gz"
     threads: 8
     resources:
         mem_gb=24,
