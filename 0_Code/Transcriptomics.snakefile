@@ -81,14 +81,9 @@ rule ribodetector:
     input:
         r1 = "2_Reads/2-Qualfilt/{sample}_1.fastq.gz",
         r2 = "2_Reads/2-Qualfilt/{sample}_2.fastq.gz",
-#        bt2_index = "expand("{genome}", genome=config['genome'])/.rev.2.bt2l"
     output:
         non_rna_r1 = "2_Reads/2-Qualfilt/{sample}_non_ribo_1.fastq.gz",
         non_rna_r2 = "2_Reads/2-Qualfilt/{sample}_non_ribo_2.fastq.gz",
-        # all_bam = temp("3_Outputs/2_rRNA_Mapping/{sample}.bam"),
-        # rna_bam = "3_Outputs/2_rRNA_Mapping/{sample}_rna.bam"
-    params:
-#        RNAdb = "expand("{genome}", genome=config['genome'])/.fna"
     conda:
         "Transcriptomics_conda_env.yml"
     threads:
@@ -112,23 +107,6 @@ rule ribodetector:
             -m 128 \
             -e rrna \
             -o {output.non_rna_r1} {output.non_rna_r2}
-
-        # bowtie2 \
-        #     --time \
-        #     --threads {threads} \
-        #     -x {params.RNAdb} \
-        #     -1 {input.r1} \
-        #     -2 {input.r2} \
-        #     --seed 1337 \
-        # | samtools sort -@ {threads} -o {output.all_bam} -
-
-        # # Filter out only RNA hits
-        # samtools view -b -@ {threads} -F4 {output.all_bam} -o {output.rna_bam}
-
-        # # Export unmapped reads (non-RNA)
-        # samtools view -b -@ {threads} -f12 {output.all_bam} \
-        # | samtools fastq -@ {threads} -1 {output.non_rna_r1} -2 {output.non_rna_r2} -
-        # &> {log}
         """
 ################################################################################
 ### Calculate the number of reads that mapped to RNA db with CoverM
