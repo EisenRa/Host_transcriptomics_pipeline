@@ -52,103 +52,113 @@ rule qualityfiltering:
             --adapter_sequence AGATCGGAAGAGCACACGTCTGAACTCCAGTCA \
             --adapter_sequence_r2  AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
         """
-################################################################################
-## Index RNA database:
-rule index_RNA:
-    input:
-        "expand("{genome}", genome=config['genome'])/"
-    output:
-        "expand("{genome}", genome=config['genome'])/"
-    conda:
-        "Transcriptomics_conda.yaml"
-    threads:
-        48
-    log:
-        "3_Outputs/0_Logs/RNA_bowtie2_indexing.log"
-    message:
-        "Indexing RNA genes with Bowtie2"
-    shell:
-        """
-        # Index MAG gene catalogue
-        bowtie2-build \
-            --threads {threads} \
-            {input} {input} \
-        &> {log}
-        """
+# ################################################################################
+# ## Index RNA database:
+# rule index_RNA:
+#     input:
+#         "expand("{genome}", genome=config['genome'])/"
+#     output:
+#         "expand("{genome}", genome=config['genome'])/"
+#     conda:
+#         "Transcriptomics_conda.yaml"
+#     threads:
+#         48
+#     log:
+#         "3_Outputs/0_Logs/RNA_bowtie2_indexing.log"
+#     message:
+#         "Indexing RNA genes with Bowtie2"
+#     shell:
+#         """
+#         # Index MAG gene catalogue
+#         bowtie2-build \
+#             --threads {threads} \
+#             {input} {input} \
+#         &> {log}
+#         """
 ################################################################################
 ### Remove RNA reads
-rule bowtie2_RNA_mapping:
+rule ribodetector:
     input:
         r1 = "2_Reads/2-Qualfilt/{sample}_1.fastq.gz",
         r2 = "2_Reads/2-Qualfilt/{sample}_2.fastq.gz",
-        bt2_index = "expand("{genome}", genome=config['genome'])/.rev.2.bt2l"
+#        bt2_index = "expand("{genome}", genome=config['genome'])/.rev.2.bt2l"
     output:
         non_rna_r1 = "2_Reads/2-Qualfilt/{sample}_non_ribo_1.fastq.gz",
         non_rna_r2 = "2_Reads/2-Qualfilt/{sample}_non_ribo_1.fastq.gz",
-        all_bam = temp("3_Outputs/2_rRNA_Mapping/{sample}.bam"),
-        rna_bam = "3_Outputs/2_rRNA_Mapping/{sample}_rna.bam"
+        # all_bam = temp("3_Outputs/2_rRNA_Mapping/{sample}.bam"),
+        # rna_bam = "3_Outputs/2_rRNA_Mapping/{sample}_rna.bam"
     params:
-        RNAdb = "expand("{genome}", genome=config['genome'])/.fna"
+#        RNAdb = "expand("{genome}", genome=config['genome'])/.fna"
     conda:
         "Transcriptomics_conda.yaml"
     threads:
-        20
+        24
+    resources:
+        mem_gb=128,
+        time='08:00:00'
     benchmark:
-        "3_Outputs/0_Logs/{sample}_RNAdb_mapping.benchmark.tsv"
+        "3_Outputs/0_Logs/{sample}_RNAremoval.benchmark.tsv"
     log:
-        "3_Outputs/0_Logs/{sample}_RNAdb_mapping.log"
+        "3_Outputs/0_Logs/{sample}_RNAremoval.log"
     message:
-        "Mapping {wildcards.sample} to RNA db using Bowtie2"
+        "Removing rRNAs from {wildcards.sample} using ribodetector"
     shell:
         """
-        # Map reads to RNAdb using Bowtie2
-        bowtie2 \
-            --time \
-            --threads {threads} \
-            -x {params.RNAdb} \
-            -1 {input.r1} \
-            -2 {input.r2} \
-            --seed 1337 \
-        | samtools sort -@ {threads} -o {output.all_bam} -
+        # Run ribodetector
+        ribodetector \
+            -t 24 \
+            -l 150 \
+            -i {input.r1} {input.r2} \
+            -m 128 \
+            -e rrna \
+            -o {output.non_rna_r1} {output.non_rna_r2}
 
-        # Filter out only RNA hits
-        samtools view -b -@ {threads} -F4 {output.all_bam} -o {output.rna_bam}
+        # bowtie2 \
+        #     --time \
+        #     --threads {threads} \
+        #     -x {params.RNAdb} \
+        #     -1 {input.r1} \
+        #     -2 {input.r2} \
+        #     --seed 1337 \
+        # | samtools sort -@ {threads} -o {output.all_bam} -
 
+        # # Filter out only RNA hits
+        # samtools view -b -@ {threads} -F4 {output.all_bam} -o {output.rna_bam}
 
-        # Export unmapped reads (non-RNA)
-        samtools view -b -@ {threads} -f12 {output.all_bam} \
-        | samtools fastq -@ {threads} -1 {output.non_rna_r1} -2 {output.non_rna_r2} -
-        &> {log}
+        # # Export unmapped reads (non-RNA)
+        # samtools view -b -@ {threads} -f12 {output.all_bam} \
+        # | samtools fastq -@ {threads} -1 {output.non_rna_r1} -2 {output.non_rna_r2} -
+        # &> {log}
         """
 ################################################################################
 ### Calculate the number of reads that mapped to RNA db with CoverM
-rule coverM_RNA_genes:
-    input:
-        expand("3_Outputs/2_rRNA_Mapping/{sample}.bam", sample=SAMPLE),
-    output:
-        total_cov = "3_Outputs/2_rRNA_Mapping/coverM_RNA_mapping.txt"
-    params:
-        rna_ref = "expand("{genome}", genome=config['genome'])/.fna"
-    conda:
-        "Transcriptomics_conda.yaml"
-    threads:
-        40
-    message:
-        "Calculating RNA mapping rate using CoverM"
-    shell:
-        """
-        # Get overall mapping rate
-        coverm genome \
-            -b {input} \
-            --genome-fasta-files {params.rna_ref} \
-            -m relative_abundance \
-            -t {threads} \
-            --min-covered-fraction 0 \
-            > {output.total_cov}
+# rule coverM_RNA_genes:
+#     input:
+#         expand("3_Outputs/2_rRNA_Mapping/{sample}.bam", sample=SAMPLE),
+#     output:
+#         total_cov = "3_Outputs/2_rRNA_Mapping/coverM_RNA_mapping.txt"
+#     params:
+#         rna_ref = "expand("{genome}", genome=config['genome'])/.fna"
+#     conda:
+#         "Transcriptomics_conda.yaml"
+#     threads:
+#         40
+#     message:
+#         "Calculating RNA mapping rate using CoverM"
+#     shell:
+#         """
+#         # Get overall mapping rate
+#         coverm genome \
+#             -b {input} \
+#             --genome-fasta-files {params.rna_ref} \
+#             -m relative_abundance \
+#             -t {threads} \
+#             --min-covered-fraction 0 \
+#             > {output.total_cov}
 
-        # Compress reference
-        pigz -t 40 {params.rna_ref_dc}
-        """
+#         # Compress reference
+#         pigz -t 40 {params.rna_ref_dc}
+#         """
 ################################################################################
 ### Index reference genome using STAR
 rule STAR_host_index:
