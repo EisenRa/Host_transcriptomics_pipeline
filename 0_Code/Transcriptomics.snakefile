@@ -89,7 +89,7 @@ rule ribodetector:
     threads:
         24
     resources:
-        mem_gb=128,
+        mem_gb=64,
         time='08:00:00'
     benchmark:
         "3_Outputs/0_Logs/{sample}_RNAremoval.benchmark.tsv"
@@ -104,7 +104,6 @@ rule ribodetector:
             -t 24 \
             -l 150 \
             -i {input.r1} {input.r2} \
-            -m 128 \
             -e rrna \
             -o {output.non_rna_r1} {output.non_rna_r2}
         """
