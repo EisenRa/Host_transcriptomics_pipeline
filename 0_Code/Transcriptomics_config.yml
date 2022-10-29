@@ -4,5 +4,6 @@
 # n.b., host_genome is the directory where the genome is stored, not the file itself.
 # readlength should be read length - 1
 genome: /projects/mjolnir1/data/genomes/chicken_GRCg7b/
+genomedone: /projects/mjolnir1/data/genomes/chicken_GRCg7b/chrLength.txt
 annotation: /projects/mjolnir1/data/genomes/chicken_GRCg7b/GCF_016699485.2_bGalGal1.mat.broiler.GRCg7b_genomic.gtf
 readlength: 149

@@ -165,7 +165,7 @@ rule STAR_host_index:
     input:
         expand("{genome}", genome=config['genome'])
     output:
-        expand("{genome}", genome=config['genome'])/chrLength.txt
+        expand("{genomedone}", genomedone=config['genomedone'])
     params:
         readlength = expand("{readlength}", readlength=config['readlength'])
     conda:
