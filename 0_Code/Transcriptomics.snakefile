@@ -170,7 +170,7 @@ rule STAR_host_mapping:
     input:
         read1="2_Reads/2-Qualfilt/{sample}_non_ribo_1.fastq.gz",
         read2="2_Reads/2-Qualfilt/{sample}_non_ribo_2.fastq.gz",
-        expand("{genomedone}", genomedone=config['genomedone'])
+        genome = expand("{genomedone}", genomedone=config['genomedone'])
     output:
         non_host_r1 = "3_Outputs/1_Mapping/{sample}_non_host_1.fastq.gz",
         non_host_r2 = "3_Outputs/1_Mapping/{sample}_non_host_2.fastq.gz",
