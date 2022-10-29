@@ -202,7 +202,7 @@ rule STAR_host_mapping:
         r2rn = "3_Outputs/1_Mapping/{sample}_non_host_2.fastq",
         gene_counts = "3_Outputs/1_Mapping/{sample}_read_counts.tsv",
         sj = "3_Outputs/1_Mapping/{sample}_SJ.tsv",
-        host_genome = expand("{host_genome}", host_genome=config['host_genome'])
+        genome = expand("{genome}", genome=config['genome'])
     conda:
         "Transcriptomics_conda_env.yml"
     threads:
