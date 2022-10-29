@@ -99,8 +99,8 @@ rule ribodetector:
         "Removing rRNAs from {wildcards.sample} using ribodetector"
     shell:
         """
-        # Run ribodetector_cpu
-        ribodetector \
+        # Run ribodetector
+        ribodetector_cpu \
             -t 24 \
             -l 150 \
             -i {input.r1} {input.r2} \
