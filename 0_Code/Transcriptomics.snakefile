@@ -84,7 +84,7 @@ rule ribodetector:
 #        bt2_index = "expand("{genome}", genome=config['genome'])/.rev.2.bt2l"
     output:
         non_rna_r1 = "2_Reads/2-Qualfilt/{sample}_non_ribo_1.fastq.gz",
-        non_rna_r2 = "2_Reads/2-Qualfilt/{sample}_non_ribo_1.fastq.gz",
+        non_rna_r2 = "2_Reads/2-Qualfilt/{sample}_non_ribo_2.fastq.gz",
         # all_bam = temp("3_Outputs/2_rRNA_Mapping/{sample}.bam"),
         # rna_bam = "3_Outputs/2_rRNA_Mapping/{sample}_rna.bam"
     params:
