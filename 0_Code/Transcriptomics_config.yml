@@ -2,5 +2,7 @@
 ### RE 10/2022
 
 # n.b., host_genome is the directory where the genome is stored, not the file itself.
-host_genome: /projects/mjolnir1/data/genomes/chicken_GRCg6a/
-annotation: /projects/mjolnir1/data/genomes/chicken_GRCg6a/GCF_000002315.6_GRCg6a_genomic.gtf
+# readlength should be read length - 1
+genome: /projects/mjolnir1/data/genomes/chicken_GRCg7b/
+annotation: /projects/mjolnir1/data/genomes/chicken_GRCg7b/GCF_016699485.2_bGalGal1.mat.broiler.GRCg7b_genomic.gtf
+readlength: 149
