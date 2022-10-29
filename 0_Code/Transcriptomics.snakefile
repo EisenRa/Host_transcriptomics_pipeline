@@ -90,7 +90,7 @@ rule ribodetector:
     params:
 #        RNAdb = "expand("{genome}", genome=config['genome'])/.fna"
     conda:
-        "Transcriptomics_conda_env.yaml"
+        "Transcriptomics_conda_env.yml"
     threads:
         24
     resources:
