@@ -199,7 +199,7 @@ rule STAR_host_mapping:
         STAR \
             --runMode alignReads \
             --runThreadN {threads} \
-            --genomeDir {params.host_genome} \
+            --genomeDir {params.genome} \
             --readFilesIn {input.read1} {input.read2} \
             --outFileNamePrefix {wildcards.sample} \
             --outSAMtype BAM SortedByCoordinate \
