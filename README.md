@@ -15,9 +15,9 @@ git clone https://github.com/EisenRa/Host_transcriptomics_pipeline.git
 RAW reads have adapters trimmed and are quality filtered using Fastp, before being mapped to the host genome using STAR, which outputs the unmapped reads, sorted BAM file, and count table.
 
 ### Usage:
-Currently, the snakefile searches for .fastq.gz files located in this path (assuming you are launching the snakefile from the current directory):
+Currently, the snakefile searches for .fq.gz files located in this path (assuming you are launching the snakefile from the current directory):
 ```
-2_Reads/1_Untrimmed/*_1.fastq.gz
+2_Reads/1_Untrimmed/*_1.fq.gz
 ```
 There are a couple of options for getting your data here:
 - 1) Create symbolic links. This means you don't have to move or copy the files:
