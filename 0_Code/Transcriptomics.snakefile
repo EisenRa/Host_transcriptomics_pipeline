@@ -214,7 +214,7 @@ rule STAR_host_mapping:
         mv {wildcards.sample}SJ.out.tab {params.sj}
         mv {wildcards.sample}Unmapped.out.mate1 {params.r1rn}
         mv {wildcards.sample}Unmapped.out.mate2 {params.r2rn}
-        mv {wildcards.sample}*final.log {params.log}
+        mv {wildcards.sample}*.final.out {params.log}
 
         # Compress non-host reads
         pigz \
