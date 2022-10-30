@@ -180,6 +180,7 @@ rule STAR_host_mapping:
         r2rn = "3_Outputs/1_Mapping/{sample}_non_host_2.fastq",
         gene_counts = "3_Outputs/1_Mapping/{sample}_read_counts.tsv",
         sj = "3_Outputs/1_Mapping/{sample}_SJ.tsv",
+        log = "3_Outputs/1_Mapping/{sample}_log.tsv",
         genome = expand("{genome}", genome=config['genome'])
     conda:
         "Transcriptomics_conda_env.yml"
@@ -213,6 +214,7 @@ rule STAR_host_mapping:
         mv {wildcards.sample}SJ.out.tab {params.sj}
         mv {wildcards.sample}Unmapped.out.mate1 {params.r1rn}
         mv {wildcards.sample}Unmapped.out.mate2 {params.r2rn}
+        mv {wildcards.sample}*final.log {params.log}
 
         # Compress non-host reads
         pigz \
