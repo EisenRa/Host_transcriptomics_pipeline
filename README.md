@@ -12,7 +12,7 @@ git clone https://github.com/EisenRa/Host_transcriptomics_pipeline.git
 ```
 
 ### What this pipeline does:
-RAW reads have adapters trimmed and are quality filtered using Fastp, before being mapped to the host genome using STAR, which outputs the unmapped reads, sorted BAM file, and count table.
+RAW reads have adapters trimmed and are quality filtered using Fastp, before having ribosomal reads removed using RiboDetector. These ribodepleted reads are then mapped to the host genome using STAR, which outputs the unmapped reads, sorted BAM file, and count table.
 
 ### Usage:
 Currently, the snakefile searches for .fq.gz files located in this path (assuming you are launching the snakefile from the current directory):
@@ -30,6 +30,8 @@ Next, you'll need to populate the absolute paths to the folder where the referen
 ```
 0_Code/Transcriptomics_config.yml
 ```
+
+The default is currently the Gallus gallus 7 genome, but if you'd like to use a different target, point it to a new directory/reference genome and the snakefile will create the reference genome index for you.
 
 That's all the setup required to get the pipeline running. Now you just need to launch the snakefile using snakemake. How you do this depends on your HPC server job queueing system. For Mjolnir, I use the following:
 ```
