@@ -43,6 +43,7 @@ rule qualityfiltering:
             --out1 {output.read1} --out2 {output.read2} \
             --trim_poly_g \
             --trim_poly_x \
+            --low_complexity_filter \
             --n_base_limit 5 \
             --qualified_quality_phred 20 \
             --length_required 60 \
