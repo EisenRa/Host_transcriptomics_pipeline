@@ -21,10 +21,10 @@ Currently, the snakefile searches for .fq.gz files located in this path (assumin
 ```
 There are a couple of options for getting your data here:
 - 1) Create symbolic links. This means you don't have to move or copy the files:
-`ln -s reads_folder/*.fastq.gz 2_Reads/1_Untrimmed/`
+`ln -s reads_folder/*.fq.gz 2_Reads/1_Untrimmed/`
 - 2) You can just put the reads in this directory.
 
-(note that the fastq file suffixes should be **'_1.fastq.gz'** and **'_2.fastq.gz'**).
+(note that the fastq file suffixes should be **'_1.fq.gz'** and **'_2.fq.gz'**).
 
 Next, you'll need to populate the absolute paths to the folder where the reference genome is stored, and the absolute path to the .gtf file. You must insert these into the following config file:
 ```
