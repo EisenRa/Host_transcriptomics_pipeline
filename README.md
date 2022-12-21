@@ -37,8 +37,8 @@ That's all the setup required to get the pipeline running. Now you just need to 
 ```
 snakemake \
 -s 0_Code/Transcriptomics.snakefile \
--j 10 \
---cluster "sbatch --mem {resources.mem_gb}G --time {resources.time} --cores {threads}" \
+-j 32 \
+--cluster "sbatch --mem {resources.mem_gb}G --time {resources.time} -c {threads} -v" \
 --use-conda \
 --conda-frontend mamba \
 --conda-prefix /projects/mjolnir1/people/ncl550/0_software \
